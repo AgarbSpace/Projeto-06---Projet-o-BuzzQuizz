@@ -97,8 +97,8 @@
         <span class="estiloDaFonte crieSuasPerguntas">Crie suas perguntas</span>
         <div class="pergunta flexColumn">
             <span class="estiloDaFonte">Pergunta 1</span>
-            <input class="textoPergunta1" type="text" placeholder="Texto da pergunta">
-            <input class="corPergunta1" type="text" placeholder="Cor de fundo da pergunta">
+            <input class="textoDaPergunta" type="text" placeholder="Texto da pergunta">
+            <input class="corDeFundoDaPergunta" type="text" placeholder="Cor de fundo da pergunta">
         </div>
 
         <div class="respostaCorreta flexColumn">
@@ -121,7 +121,7 @@
             <span class="estiloDaFonte">Pergunta 2</span>
             <ion-icon name="create-outline" onclick="preencherAparece(this)"></ion-icon>
         </div>
-        <button class="prosseguir">Prosseguir pra criar níveis</button>
+        <button class="prosseguir" onclick="validaPergunta()">Prosseguir pra criar níveis</button>
 
     </section>
 

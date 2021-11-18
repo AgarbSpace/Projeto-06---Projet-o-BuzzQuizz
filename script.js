@@ -5,7 +5,7 @@ let contadorPergunta = 1;
 teste();
 function teste (){
     const teste = document.querySelectorAll(".respostasIncorretas");
-    console.log(teste);
+    console.log(teste[0].children[1]);
 }
 
 function telaDesaparece(){
@@ -84,7 +84,7 @@ function preencherAparece(icone){
         avoDoElemento.innerHTML += `
         <div class="pergunta flexColumn">
         <span class="estiloDaFonte">Pergunta ${contadorPergunta}</span>
-        <input type="text" placeholder="Texto da pergunta">
+        <input class="textoDaPergunta" type="text" placeholder="Texto da pergunta">
         <input type="text" placeholder="Cor de fundo da pergunta">
         </div>
         
@@ -109,13 +109,21 @@ function preencherAparece(icone){
         <ion-icon name="create-outline" onclick ="preencherAparece(this)"></ion-icon>
         </div>  
         
-        <button class="prosseguir" onclick:"validaPerguntas()">Prosseguir pra criar níveis</button>
+        <button class="prosseguir" onclick:"validaPergunta()">Prosseguir pra criar níveis</button>
         `
     }else{
         alert("Não é possível criar uma nova pergunta, limite escolhido atingido");
     }
 }
 
-function validaPerguntas(){
+function validaPergunta(){
+    const validacaoDaPergunta = document.querySelectorAll(".pergunta")
+    let tamanhoPergunta = [];
 
+ for(let i = 0; i < quantidadeDePerguntas; i++){
+    tamanhoPergunta = validacaoDaPergunta[0].children[i].value
+    if(tamanhoPergunta.length < 20 ){
+        alert("Título deve ser superior a 20 caracteres");
+        }
+    }
 }
