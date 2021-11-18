@@ -24,7 +24,7 @@
 
     <section class="none seusQuizzes">
         <div class="flex">
-            <span class="quizzesSalvos">Seus Quizzes</span>
+            <span class="estiloDaFonte">Seus Quizzes</span>
             <button class="botaoPequeno"><ion-icon name="add-outline"></ion-icon></button>
         </div>
         <div class="quizzesLocais">
@@ -93,7 +93,37 @@
         <button class="criarPergunta" onclick="validaQuizz()">Prosseguir para criar perguntas</button>
     </section>
 
+    <section class="criacaoDasPerguntas">
+        <span class="estiloDaFonte crieSuasPerguntas">Crie suas perguntas</span>
+        <div class="pergunta flexColumn">
+            <span class="estiloDaFonte">Pergunta 1</span>
+            <input class="textoPergunta1" type="text" placeholder="Texto da pergunta">
+            <input class="corPergunta1" type="text" placeholder="Cor de fundo da pergunta">
+        </div>
 
+        <div class="respostaCorreta flexColumn">
+            <span class="estiloDaFonte">Resposta correta</span>
+            <input type="text" placeholder="Resposta correta">
+            <input type="text" placeholder="URL da imagem">
+        </div>
+
+        <div class="respostasIncorretas flexColumn">
+            <span class="estiloDaFonte">Respostas incorretas</span>
+            <input class="respostaIncorreta1" type="text" placeholder="Resposta incorreta 1">
+            <input class="url1" type="text" placeholder="URL da imagem 1">
+            <input class="respostaIncorreta2" type="text" placeholder="Resposta incorreta 2">
+            <input class="url2" type="text" placeholder="URL da imagem 2">
+            <input type="text" placeholder="Resposta incorreta 3">
+            <input type="text" placeholder="URL da imagem 3">
+        </div>
+
+        <div class="flex containerPergunta"> 
+            <span class="estiloDaFonte">Pergunta 2</span>
+            <ion-icon name="create-outline" onclick="preencherAparece(this)"></ion-icon>
+        </div>
+        <button class="prosseguir">Prosseguir pra criar níveis</button>
+
+    </section>
 
 
 
