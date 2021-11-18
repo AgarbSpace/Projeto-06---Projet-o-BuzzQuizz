@@ -6,13 +6,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
     <title>Projeto 06 - Projetao: BuzzQuizz</title>
 </head>
 <body>
+    <header>
+        <h1 class="tituloDaPagina">BuzzQuizz</h1>
+    </header>
+
+    <section class="quizz">
+        <span class="naoCriouQuizz">Você não criou nenhum <br> quizz ainda :(</span>
+        <button class="botaoCriarQuizz" onclick="telaDesaparece()">Criar Quizz</button>
+    </section>
+
+    <section class="none seusQuizzes">
+        <div class="flex">
+            <span class="quizzesSalvos">Seus Quizzes</span>
+            <button class="botaoPequeno"><ion-icon name="add-outline"></ion-icon></button>
+        </div>
+        <div class="quizzesLocais">
+            <div class="imagemComTexto">
+                <img src="assets/gamer.jpg" alt="">
+                <span class="textoDaImg">Qual seu nível gamer?</span>
+            </div>
+                
+            <div class="imagemComTexto">
+                <img src="assets/gamer.jpg" alt="">
+                <span class="textoDaImg">Qual seu nível gamer?</span>
+            </div>
+                
+            <div class="imagemComTexto">
+                <img src="assets/gamer.jpg" alt="">
+                <span class="textoDaImg">Qual seu nível gamer?</span>
+            </div>
+            </div>
+        </section>
+        
     
+    <section class="quizzes">
+        <span class="todosOsQuizzes">Todos os quizzes</span>
+        <div>
+            <div class="quizzesFeitos">
+                <div class="imagemComTexto">
+                    <img src="assets/gamer.jpg" alt="">
+                    <span class="textoDaImg">Qual seu nível gamer?</span>
+                </div>
+
+                <div class="imagemComTexto">
+                    <img src="assets/gamer.jpg" alt="">
+                    <span class="textoDaImg">Qual seu nível gamer?</span>
+                </div>
+
+                <div class="imagemComTexto">
+                    <img src="assets/gamer.jpg" alt="">
+                    <span class="textoDaImg">Qual seu nível gamer?</span>
+                </div>
+
+                <div class="imagemComTexto">
+                    <img src="assets/gamer.jpg" alt="">
+                    <span class="textoDaImg">Qual seu nível gamer?</span>
+                </div>
+
+                <div class="imagemComTexto">
+                    <img src="assets/gamer.jpg" alt="">
+                    <span class="textoDaImg">Qual seu nível gamer?</span>
+                </div>
+
+                <div class="imagemComTexto">
+                    <img src="assets/gamer.jpg" alt="">
+                    <span class="textoDaImg">Qual seu nível gamer?</span>
+                </div>
+              
+            </div>
+        </div>
+    </section>
+
+    <section class="none telaDeCriacaoDoQuizz">
+        <span class="comece">Comece pelo começo</span>
+        <input type="text" placeholder="Título do seu quizz">
+        <input type="text" placeholder="Url da imagem do seu quizz">
+        <input type="text" placeholder="Quantidade de perguntas do quizz">
+        <input type="text" placeholder="Quantidade de níveis do quizz">
+        <button class="criarPergunta">Prosseguir para criar perguntas</button>
+    </section>
 
 
 
+
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
