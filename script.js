@@ -2,11 +2,6 @@ let quantidadeDePerguntas = 0;
 let contadorPergunta = 1; 
 
 //quizzesLocais()
-teste();
-function teste (){
-    const teste = document.querySelectorAll(".respostasIncorretas");
-    console.log(teste[0].children[1]);
-}
 
 function telaDesaparece(){
     const quizzDesaparece = document.querySelector(".quizz")
@@ -55,75 +50,102 @@ function preencherAparece(icone){
     if((contadorPergunta) < quantidadeDePerguntas){
     avoDoElemento.innerHTML += `
     <div class="pergunta flexColumn">
-    <span class="estiloDaFonte">Pergunta ${contadorPergunta}</span>
-    <input type="text" placeholder="Texto da pergunta">
-    <input type="text" placeholder="Cor de fundo da pergunta">
+        <span class="estiloDaFonte">Pergunta ${contadorPergunta}</span>
+        <input class="textoDaPergunta" type="text" placeholder="Texto da pergunta">
+        <input class="corDeFundoDaPergunta" type="text" placeholder="Cor de fundo da pergunta">
     </div>
     
     <div class="respostaCorreta flexColumn">
-    <span class="estiloDaFonte">Resposta correta</span>
-    <input type="text" placeholder="Resposta correta">
-    <input type="text" placeholder="URL da imagem">
+        <span class="estiloDaFonte">Resposta correta</span>
+        <input class="inputRespostaCorreta" type="text" placeholder="Resposta correta">
+        <input class= "urlRespostaCorreta" type="text" placeholder="URL da imagem">
     </div>
     
     <div class="respostasIncorretas flexColumn">
-    <span class="estiloDaFonte">Respostas incorretas</span>
-    <input class="inputPerguntas" type="text" placeholder="Resposta incorreta 1">
-    <input class="inputPerguntas" type="text" placeholder="URL da imagem 1">
-    <input type="text" placeholder="Resposta incorreta 2">
-    <input type="text" placeholder="URL da imagem 2">
-    <input type="text" placeholder="Respsota incorreta 3">
-    <input type="text" placeholder="URL da imagem 3">
-    </div>
+        <span class="estiloDaFonte">Respostas incorretas</span>
+        <input class="respostaIncorreta" type="text" placeholder="Resposta incorreta 1">
+        <input class="url" type="text" placeholder="URL da imagem 1">
+        <input class="respostaIncorreta" type="text" placeholder="Resposta incorreta 2">
+        <input class="url" type="text" placeholder="URL da imagem 2">
+        <input class="respostaIncorreta" type="text" placeholder="Resposta incorreta 3">
+        <input class="url" type="text" placeholder="URL da imagem 3">
+        </div>
 
     <div class="flex containerPergunta"> 
     <span class="estiloDaFonte">Pergunta ${contadorPergunta + 1}</span>
     <ion-icon name="create-outline" onclick ="preencherAparece(this)"></ion-icon>
     </div>    `
-    }else if(contadorPergunta===quantidadeDePerguntas){
+    }else if(contadorPergunta === parseInt(quantidadeDePerguntas)){
         avoDoElemento.innerHTML += `
         <div class="pergunta flexColumn">
-        <span class="estiloDaFonte">Pergunta ${contadorPergunta}</span>
-        <input class="textoDaPergunta" type="text" placeholder="Texto da pergunta">
-        <input type="text" placeholder="Cor de fundo da pergunta">
+            <span class="estiloDaFonte">Pergunta ${contadorPergunta}</span>
+            <input class="textoDaPergunta" type="text" placeholder="Texto da pergunta">
+            <input class="corDeFundoDaPergunta" type="text" placeholder="Cor de fundo da pergunta">
         </div>
         
         <div class="respostaCorreta flexColumn">
-        <span class="estiloDaFonte">Resposta correta</span>
-        <input type="text" placeholder="Resposta correta">
-        <input type="text" placeholder="URL da imagem">
+            <span class="estiloDaFonte">Resposta correta</span>
+            <input class="inputRespostaCorreta" type="text" placeholder="Resposta correta">
+            <input class= "urlRespostaCorreta" type="text" placeholder="URL da imagem">
         </div>
         
         <div class="respostasIncorretas flexColumn">
-        <span class="estiloDaFonte">Respostas incorretas</span>
-        <input class="inputPerguntas" type="text" placeholder="Resposta incorreta 1">
-        <input class="inputPerguntas" type="text" placeholder="URL da imagem 1">
-        <input type="text" placeholder="Resposta incorreta 2">
-        <input type="text" placeholder="URL da imagem 2">
-        <input type="text" placeholder="Respsota incorreta 3">
-        <input type="text" placeholder="URL da imagem 3">
+            <span class="estiloDaFonte">Respostas incorretas</span>
+            <input class="respostaIncorreta" type="text" placeholder="Resposta incorreta 1">
+            <input class="url" type="text" placeholder="URL da imagem 1">
+            <input class="respostaIncorreta" type="text" placeholder="Resposta incorreta 2">
+            <input class="url" type="text" placeholder="URL da imagem 2">
+            <input class="respostaIncorreta" type="text" placeholder="Resposta incorreta 3">
+            <input class="url" type="text" placeholder="URL da imagem 3">
         </div>
-    
-        <div class="flex containerPergunta"> 
-        <span class="estiloDaFonte">Pergunta ${contadorPergunta + 1}</span>
-        <ion-icon name="create-outline" onclick ="preencherAparece(this)"></ion-icon>
-        </div>  
         
-        <button class="prosseguir" onclick:"validaPergunta()">Prosseguir pra criar níveis</button>
+        <button class="prosseguir" onclick="validaPergunta(); validaResposta(); validaRespostaIncorreta()">Prosseguir pra criar níveis</button>
         `
-    }else{
-        alert("Não é possível criar uma nova pergunta, limite escolhido atingido");
     }
 }
 
 function validaPergunta(){
     const validacaoDaPergunta = document.querySelectorAll(".pergunta")
-    let tamanhoPergunta = [];
+    let tamanhoPergunta = validacaoDaPergunta[0].children[2].value
+    let validaCor;
 
- for(let i = 0; i < quantidadeDePerguntas; i++){
-    tamanhoPergunta = validacaoDaPergunta[0].children[i].value
-    if(tamanhoPergunta.length < 20 ){
-        alert("Título deve ser superior a 20 caracteres");
-        }
+    for(i = 0; i < validacaoDaPergunta[0].children.length; i++){
+        if(validacaoDaPergunta[0].children[i].classList.contains("corDeFundoDaPergunta") === true){
+            validaCor = validacaoDaPergunta[0].children[i].value;
+            if(validaCor[0] === '#' && validaCor.length <= 6){
+                for(let j = 1; j < validaCor.length; j++ ){
+                    if((validaCor[i] >= 'A' && validaCor[i] <= 'F') || (validaCor[i] >= 0 && validaCor[i] <= 9)){
+                    }else{
+                        alert("Código de cor inválido, tente com letras de A a F maiúsculas, números e iniciar com #")
+                        break;
+                    }
+                }
+            }else{
+                alert("Cores hexadecimais devem iniciar com # e ter até 6 caracteres")
+            }
+        }else if(typeof(validacaoDaPergunta[0].children[i].value) === 'string'){
+             tamanhoPergunta = validacaoDaPergunta[0].children[i].value
+             if(tamanhoPergunta.length < 20 ){
+                alert("Título deve ser superior a 20 caracteres");
+            }
+         }
+     }
+}
+
+function validaResposta(){
+    const validaRespostaCorreta = document.querySelectorAll(".respostaCorreta");
+    if(validaRespostaCorreta[0].children[1].value === null || validaRespostaCorreta[0].children[1].value === "" ){
+        alert("Insira algo no campo de resposta")
     }
+    if(validaRespostaCorreta[0].children[0]){
+
+    }
+}
+
+function validaRespostaIncorreta(){
+    const validarRespostaIncorreta = document.querySelectorAll(".respostasIncorretas");
+    if(validarRespostaIncorreta[0].children[1].value === null || validarRespostaIncorreta[0].children[1].value === ""){
+        alert("Insira ao menos uma resposta incorreta");
+    }
+    
 }
