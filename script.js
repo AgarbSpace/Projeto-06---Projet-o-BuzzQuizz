@@ -72,7 +72,7 @@ function preencherAparece(icone){
     <input class="inputPerguntas" type="text" placeholder="URL da imagem 1">
     <input type="text" placeholder="Resposta incorreta 2">
     <input type="text" placeholder="URL da imagem 2">
-    <input type="text" placeholder="Respsota incorreta 3">
+    <input type="text" placeholder="Resposta incorreta 3">
     <input type="text" placeholder="URL da imagem 3">
     </div>
 
@@ -126,4 +126,47 @@ function validaPergunta(){
         alert("Título deve ser superior a 20 caracteres");
         }
     }
+}
+
+function validaNivel(){
+    const validaTitulo = document.querySelector(".perguntaAberta")
+    const validaAcerto = document.querySelector(".acertoNivel")
+    const validaUrl = document.querySelector(".urlNivel")
+    const validaDescricao = document.querySelector(".descricaoNivel")
+    if(validaTitulo.length < 10 || validaTitulo=== "" || validaTitulo === null) {
+        alert("O título é inválido, deve conter pelo menos 10 caracteres.");
+}
+    if(validaAcerto < 0 || validaAcerto > 100){
+        alert("O valor deve estar entre 0 e 100")
+    }
+    if(validaUrl ){
+
+    }
+    if(validaDescricao.length < 30){
+        alert("A descrição deve ter ao menos 30 caracteres")
+    }
+}
+
+function apareceDadosNivel(botao){
+    contadorPergunta++;
+    const paiDoElemento = botao.parentElement;
+    const avoDoElemento = paiDoElemento.parentElement;
+    paiDoElemento.classList.add("none");
+    if((contadorPergunta) < quantidadeDePerguntas){
+    avoDoElemento.innerHTML += `
+        <span class="estiloDaFonte">Nível ${contadorPergunta}</span>
+        <input class="tituloNivel" type="text" placeholder="Título do nível">
+        <input class="acertoNivel" type="text" placeholder="% de acerto mínima">
+        <input class="urlNivel" type="url" placeholder="URL da imagem do nível">
+        <input class="descricaoNivel" type="text" placeholder="Descrição do nível">
+        `
+    }
+    else if(contadorPergunta===quantidadeDePerguntas){
+            avoDoElemento.innerHTML += `    <span class="estiloDaFonte">Nível ${contadorPergunta}</span>
+            <input class="tituloNivel" type="text" placeholder="Título do nível">
+            <input class="acertoNivel" type="text" placeholder="% de acerto mínima">
+            <input class="urlNivel" type="url" placeholder="URL da imagem do nível">
+            <input class="descricaoNivel" type="text" placeholder="Descrição do nível">
+            `
+}
 }
