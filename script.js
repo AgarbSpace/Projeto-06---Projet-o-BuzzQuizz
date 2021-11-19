@@ -1,14 +1,16 @@
 let quantidadeDePerguntas = 0;
 let contadorPergunta = 1; 
 
-//quizzesLocais()
+quizzesLocais()
 
 function telaDesaparece(){
     const quizzDesaparece = document.querySelector(".quizz")
     const quizzesDesaparece = document.querySelector(".quizzes")
     const telaDeCriacaoDoQuizzAparece = document.querySelector(".telaDeCriacaoDoQuizz")
-    quizzDesaparece.classList.add("none")
+    const seusQuizzesDesaparece = document.querySelector(".seusQuizzes");
+    quizzDesaparece.classList.add("none");
     quizzesDesaparece.classList.add("none");
+    seusQuizzesDesaparece.classList.add("none");
     telaDeCriacaoDoQuizzAparece.classList.remove("none");
 }
 
@@ -26,20 +28,29 @@ function validaQuizz(){
     const validaTitulo = document.querySelector(".tituloQuizz").value
     const validaQtdePerguntas = document.querySelector(".qtdePerguntasQuizz").value
     const validaQtdeNiveis = document.querySelector(".qtdeNiveisQuizz").value
+    let verificacao = true;
     if(validaTitulo.length < 20 || validaTitulo.length > 65 || validaTitulo=== "" || validaTitulo === null){
         alert("O título é inválido, deve conter de 20 a 65 caracteres");
         validaTitulo.value = "";
+        verificacao = false
     }
     if(validaQtdePerguntas < 3 || validaQtdePerguntas === "" || validaQtdePerguntas === null){
         alert("Mínimo de perguntas é 3");
         validaQtdePerguntas.value = ""
+        verificacao = false
     }
     if(validaQtdeNiveis < 2 || validaQtdeNiveis === "" || validaQtdeNiveis === null){
         alert("Precisa de um mínimo de 2 níveis")
         validaQtdePerguntas.value = ""
+        verificacao = false
     }
-
-    quantidadeDePerguntas = validaQtdePerguntas;
+    if(verificacao === true){
+        quantidadeDePerguntas = validaQtdePerguntas;
+        const prosseguirParaPerguntas = document.querySelector(".criacaoDasPerguntas");
+        const passouPelosTestes = document.querySelector(".telaDeCriacaoDoQuizz")
+        passouPelosTestes.classList.add("none");
+        prosseguirParaPerguntas.classList.remove("none");
+    }
 }
 
 function preencherAparece(icone){
@@ -148,4 +159,10 @@ function validaRespostaIncorreta(){
         alert("Insira ao menos uma resposta incorreta");
     }
     
+}
+
+function voltarPraHome(voltarHome){
+    const voltar = voltarHome.parentElement;
+    voltar.classList.add("none");
+
 }
