@@ -209,6 +209,7 @@ function apareceDadosNivel(botao){
 }
 }
 
+//Comportamento de respostas:
 function selecionado(botao){
     let procuraOnclick = document.querySelectorAll(".imagemComTexto")
     for (let i = 0; i < procuraOnclick.length; i++) {
