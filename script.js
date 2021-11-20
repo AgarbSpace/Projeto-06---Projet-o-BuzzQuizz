@@ -209,3 +209,28 @@ function apareceDadosNivel(botao){
 }
 }
 
+function selecionado(botao){
+    let procuraOnclick = document.querySelectorAll(".imagemComTexto")
+    for (let i = 0; i < procuraOnclick.length; i++) {
+        procuraOnclick[i].removeAttribute('onclick')
+        
+    }
+        
+    opaco()
+    botao.classList.remove("opaco")
+    let procura = document.querySelector(".selecaoCerta")
+    botao.classList.add("selecaoCerta")
+    console.log(procura)
+    if(procura !== null){
+        procura.classList.remove("selecaoCerta")
+    }
+}
+function opaco(){
+    const classe = document.querySelectorAll(".imagemComTexto")
+    for (let i = 0; i < classe.length; i++) {
+        classe[i].classList.add("opaco")
+        
+    }
+    
+}
+

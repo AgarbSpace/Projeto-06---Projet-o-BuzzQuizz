@@ -460,3 +460,12 @@ input::placeholder{
 .niveis input{
     margin-bottom: 12px;
 }
+.opaco {
+    opacity: 0.3
+}
+.opaco span{
+    color: #FF4B4B;
+}
+.selecaoCerta span{
+    color: #009C22;
+}
