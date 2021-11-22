@@ -16,8 +16,8 @@ function listarQuizzes(quizzesDoServidor){
     const addQuizzesFeitos = document.querySelector(".quizzesFeitos");
     for(let i = 0; i < quizzes.length; i++){
         addQuizzesFeitos.innerHTML += `
-        <div id="${quizzes[i].id}" class="imagemComTexto">
-        <img src="${quizzes[i].image}" alt="">
+        <div id="${quizzes[i].id}" class="imagemComTexto" onclick="quizzSelecionado(this)">
+        <img src="${quizzes[i].image}"  alt="">
         <span class="textoDaImg">${quizzes[i].title}</span>
     </div>`
     }
@@ -264,29 +264,23 @@ function validaNivel(){
     }
 }
 
-function apareceDadosNivel(botao){
-    contadorNivel++;
-    const paiDoElemento = botao.parentElement;
-    const avoDoElemento = paiDoElemento.parentElement;
-    paiDoElemento.classList.add("none");
-    if(contadorNivel < quantidadeDeNiveis){
-    avoDoElemento.innerHTML += `
-        <span class="estiloDaFonte">Nível ${contadorNivel}</span>
+function apareceDadosNivel(){
+/*     const paiDoElemento = botao.parentElement; */
+    const avoDoElemento = document.querySelector(".niveis");
+    console.log(avoDoElemento)
+/*     paiDoElemento.classList.add("none");
+ */    for (let i = 1; i <= quantidadeDeNiveis ; i++){
+        avoDoElemento.innerHTML += `
+        <span class="estiloDaFonte">Nível ${i}</span>
         <input class="tituloNivel" type="text" placeholder="Título do nível">
         <input class="acertoNivel" type="text" placeholder="% de acerto mínima">
         <input class="urlNivel" type="url" placeholder="URL da imagem do nível">
         <input class="descricaoNivel" type="text" placeholder="Descrição do nível">
         `
     }
-    else if(contadorNivel === parseInt(quantidadeDeNiveis)){
-            avoDoElemento.innerHTML += `    <span class="estiloDaFonte">Nível ${contadorPergunta}</span>
-            <input class="tituloNivel" type="text" placeholder="Título do nível">
-            <input class="acertoNivel" type="text" placeholder="% de acerto mínima">
-            <input class="urlNivel" type="url" placeholder="URL da imagem do nível">
-            <input class="descricaoNivel" type="text" placeholder="Descrição do nível">
-            <button class="prosseguir" onclick="validaNivel()">Finalizar Quizz</button>
-            `
-}
+    avoDoElemento.innerHTML += `
+    <button class="prosseguir" onclick="validaNivel()">Finalizar Quizz</button>
+    `
 }
 
 //Comportamento de respostas:
@@ -313,5 +307,11 @@ function opaco(){
         
     }
     
+}
+
+function quizzSelecionado(botao){
+    const quizz = document.getElementById(botao).childNodes
+    console.log(quizz)
+
 }
 
