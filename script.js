@@ -271,21 +271,32 @@ function apareceDadosNivel(botao){
     paiDoElemento.classList.add("none");
     if(contadorNivel < quantidadeDeNiveis){
     avoDoElemento.innerHTML += `
+    <div class="perguntaAberta flexColumn">
         <span class="estiloDaFonte">Nível ${contadorNivel}</span>
         <input class="tituloNivel" type="text" placeholder="Título do nível">
         <input class="acertoNivel" type="text" placeholder="% de acerto mínima">
         <input class="urlNivel" type="url" placeholder="URL da imagem do nível">
         <input class="descricaoNivel" type="text" placeholder="Descrição do nível">
+    </div>
+    <div class="flex containerPergunta">
+        <span class="estiloDaFonte">Nivel ${contadorNivel+1}</span> 
+        <ion-icon name="create-outline" onclick="apareceDadosNivel(this)"></ion-icon>
+    </div>
+        
+        
         `
     }
     else if(contadorNivel === parseInt(quantidadeDeNiveis)){
-            avoDoElemento.innerHTML += `    <span class="estiloDaFonte">Nível ${contadorPergunta}</span>
+        avoDoElemento.innerHTML += `    
+        <div class="perguntaAberta flexColumn">
+            <span class="estiloDaFonte">Nível ${contadorNivel}</span>
             <input class="tituloNivel" type="text" placeholder="Título do nível">
             <input class="acertoNivel" type="text" placeholder="% de acerto mínima">
             <input class="urlNivel" type="url" placeholder="URL da imagem do nível">
             <input class="descricaoNivel" type="text" placeholder="Descrição do nível">
-            <button class="prosseguir" onclick="validaNivel()">Finalizar Quizz</button>
-            `
+        </div>
+        <button class="prosseguir" onclick="validaNivel()">Finalizar Quizz</button>
+        `
 }
 }
 
