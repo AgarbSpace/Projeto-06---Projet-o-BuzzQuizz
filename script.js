@@ -1,7 +1,25 @@
 let quantidadeDePerguntas = 0;
 let contadorPergunta = 1; 
 
-quizzesLocais()
+//quizzesLocais()
+pegarTodosOsQuizzes(); 
+function pegarTodosOsQuizzes(){
+    const promessa = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes")
+    promessa.then(listarQuizzes);
+    promessa.catch(() => alert("Algo deu errado"));
+}
+
+function listarQuizzes(quizzesDoServidor){
+    const quizzes = quizzesDoServidor.data;
+    const addQuizzesFeitos = document.querySelector(".quizzesFeitos");
+    for(let i = 0; i < quizzes.length; i++){
+        addQuizzesFeitos.innerHTML += `
+        <div id="${quizzes[i].id}" class="imagemComTexto">
+        <img src="${quizzes[i].image}" alt="">
+        <span class="textoDaImg">${quizzes[i].title}</span>
+    </div>`
+    }
+}
 
 function telaDesaparece(){
     const quizzDesaparece = document.querySelector(".quizz")
@@ -110,7 +128,7 @@ function preencherAparece(icone){
             <input class="url" type="text" placeholder="URL da imagem 3">
         </div>
         
-        <button class="prosseguir" onclick="validaPergunta(); validaResposta(); validaRespostaIncorreta()">Prosseguir pra criar níveis</button>
+        <button class="prosseguir" onclick="validaPergunta()">Prosseguir pra criar níveis</button>
         `
     }
 }
@@ -119,6 +137,7 @@ function validaPergunta(){
     const validacaoDaPergunta = document.querySelectorAll(".pergunta")
     let tamanhoPergunta = validacaoDaPergunta[0].children[2].value
     let validaCor;
+    let validar = true;
 
     for(i = 0; i < validacaoDaPergunta[0].children.length; i++){
         if(validacaoDaPergunta[0].children[i].classList.contains("corDeFundoDaPergunta") === true){
@@ -127,39 +146,54 @@ function validaPergunta(){
                 for(let j = 1; j < validaCor.length; j++ ){
                     if((validaCor[i] >= 'A' && validaCor[i] <= 'F') || (validaCor[i] >= 0 && validaCor[i] <= 9)){
                     }else{
+                        validar = false;
                         alert("Código de cor inválido, tente com letras de A a F maiúsculas, números e iniciar com #")
                         break;
                     }
                 }
             }else{
+                validar = false;
                 alert("Cores hexadecimais devem iniciar com # e ter até 6 caracteres")
             }
         }else if(typeof(validacaoDaPergunta[0].children[i].value) === 'string'){
              tamanhoPergunta = validacaoDaPergunta[0].children[i].value
              if(tamanhoPergunta.length < 20 ){
+                 validar = false
                 alert("Título deve ser superior a 20 caracteres");
             }
          }
      }
+
+     validaResposta();
+     validaRespostaIncorreta();
+
+     function validaResposta(){
+         const validaRespostaCorreta = document.querySelectorAll(".respostaCorreta");
+         if(validaRespostaCorreta[0].children[1].value === null || validaRespostaCorreta[0].children[1].value === "" ){
+             alert("Insira algo no campo de resposta")
+         }
+         if(validaRespostaCorreta[0].children[0]){
+     
+         }
+         return true;
+     }
+     
+     function validaRespostaIncorreta(){
+         const validarRespostaIncorreta = document.querySelectorAll(".respostasIncorretas");
+         if(validarRespostaIncorreta[0].children[1].value === null || validarRespostaIncorreta[0].children[1].value === ""){
+             alert("Insira ao menos uma resposta incorreta");
+         }
+         return true;
+     }
+
+     if(validar === true && validaResposta() === true && validaRespostaIncorreta() === true){
+        const continua = document.querySelector(".criacaoDasPerguntas");
+        const niveisAparece = document.querySelector(".niveis");
+        niveisAparece.classList.remove("none");
+        continua.classList.add("none");
+     }
 }
 
-function validaResposta(){
-    const validaRespostaCorreta = document.querySelectorAll(".respostaCorreta");
-    if(validaRespostaCorreta[0].children[1].value === null || validaRespostaCorreta[0].children[1].value === "" ){
-        alert("Insira algo no campo de resposta")
-    }
-    if(validaRespostaCorreta[0].children[0]){
-
-    }
-}
-
-function validaRespostaIncorreta(){
-    const validarRespostaIncorreta = document.querySelectorAll(".respostasIncorretas");
-    if(validarRespostaIncorreta[0].children[1].value === null || validarRespostaIncorreta[0].children[1].value === ""){
-        alert("Insira ao menos uma resposta incorreta");
-    }
-    
-}
 
 function voltarPraHome(voltarHome){
     const voltar = voltarHome.parentElement;

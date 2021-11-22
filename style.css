@@ -101,6 +101,11 @@ header{
     flex-wrap: wrap;
     
     column-gap: 15px;
+
+    width: 1080px;
+    height: 374px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 img{
