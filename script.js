@@ -1,7 +1,8 @@
 let quantidadeDePerguntas = 0;
-let contadorPergunta = 1; 
 let quantidadeDeNiveis = 0;
 let contadorNivel = 1;
+let tituloQuizz;
+let imgQuizz;
 
 //quizzesLocais()
 pegarTodosOsQuizzes(); 
@@ -50,6 +51,9 @@ function validaQuizz(){
     const validaQtdePerguntas = document.querySelector(".qtdePerguntasQuizz").value
     const validaQtdeNiveis = document.querySelector(".qtdeNiveisQuizz").value
     let verificacao = true;
+    tituloQuizz = validaTitulo;
+    imgQuizz = validaUrlImagemQuizz.value
+
     const url = validaUrlImagemQuizz.value
     if(validaTitulo.length < 20 || validaTitulo.length > 65 || validaTitulo=== "" || validaTitulo === null){
         alert("O título é inválido, deve conter de 20 a 65 caracteres");
@@ -79,58 +83,29 @@ function validaQuizz(){
         const passouPelosTestes = document.querySelector(".telaDeCriacaoDoQuizz")
         passouPelosTestes.classList.add("none");
         prosseguirParaPerguntas.classList.remove("none");
+        preencherAparece();
     }else{
         alert("verifique os dados e tente novamente");
     }
 }
 
-function preencherAparece(icone){
-    contadorPergunta++;
-    const paiDoElemento = icone.parentElement;
-    const avoDoElemento = paiDoElemento.parentElement;
-    paiDoElemento.classList.add("none");
-    if((contadorPergunta) < quantidadeDePerguntas){
-    avoDoElemento.innerHTML += `
-    <div class="pergunta flexColumn">
-        <span class="estiloDaFonte">Pergunta ${contadorPergunta}</span>
-        <input class="textoDaPergunta" type="text" placeholder="Texto da pergunta">
-        <input class="corDeFundoDaPergunta" type="text" placeholder="Cor de fundo da pergunta">
-    </div>
-    
-    <div class="respostaCorreta flexColumn">
-        <span class="estiloDaFonte">Resposta correta</span>
-        <input class="inputRespostaCorreta" type="text" placeholder="Resposta correta">
-        <input class= "urlRespostaCorreta" type="text" placeholder="URL da imagem">
-    </div>
-    
-    <div class="respostasIncorretas flexColumn">
-        <span class="estiloDaFonte">Respostas incorretas</span>
-        <input class="respostaIncorreta" type="text" placeholder="Resposta incorreta 1">
-        <input class="url" type="text" placeholder="URL da imagem 1">
-        <input class="respostaIncorreta" type="text" placeholder="Resposta incorreta 2">
-        <input class="url" type="text" placeholder="URL da imagem 2">
-        <input class="respostaIncorreta" type="text" placeholder="Resposta incorreta 3">
-        <input class="url" type="text" placeholder="URL da imagem 3">
-        </div>
-
-    <div class="flex containerPergunta"> 
-    <span class="estiloDaFonte">Pergunta ${contadorPergunta + 1}</span>
-    <ion-icon name="create-outline" onclick ="preencherAparece(this)"></ion-icon>
-    </div>    `
-    }else if(contadorPergunta === parseInt(quantidadeDePerguntas)){
+function preencherAparece(){
+    const avoDoElemento = document.querySelector(".criacaoDasPerguntas");
+    avoDoElemento.classList.remove("none");
+    for(let i = 1; i <= quantidadeDePerguntas; i++ ){
         avoDoElemento.innerHTML += `
         <div class="pergunta flexColumn">
-            <span class="estiloDaFonte">Pergunta ${contadorPergunta}</span>
+            <span class="estiloDaFonte">Pergunta ${i}</span>
             <input class="textoDaPergunta" type="text" placeholder="Texto da pergunta">
             <input class="corDeFundoDaPergunta" type="text" placeholder="Cor de fundo da pergunta">
         </div>
-        
+
         <div class="respostaCorreta flexColumn">
             <span class="estiloDaFonte">Resposta correta</span>
             <input class="inputRespostaCorreta" type="text" placeholder="Resposta correta">
             <input class= "urlRespostaCorreta" type="text" placeholder="URL da imagem">
         </div>
-        
+
         <div class="respostasIncorretas flexColumn">
             <span class="estiloDaFonte">Respostas incorretas</span>
             <input class="respostaIncorreta" type="text" placeholder="Resposta incorreta 1">
@@ -140,10 +115,14 @@ function preencherAparece(icone){
             <input class="respostaIncorreta" type="text" placeholder="Resposta incorreta 3">
             <input class="url" type="text" placeholder="URL da imagem 3">
         </div>
-        
-        <button class="prosseguir" onclick="validaPergunta()">Prosseguir pra criar níveis</button>
         `
+        if(i === parseInt(quantidadeDePerguntas)){
+            avoDoElemento.innerHTML += `        
+            <button class="prosseguir" onclick="validaPergunta()">Prosseguir pra criar níveis</button>
+            `
+        }
     }
+    
 }
 
 function validaPergunta(){
@@ -226,6 +205,7 @@ function validaPergunta(){
         const niveisAparece = document.querySelector(".niveis");
         niveisAparece.classList.remove("none");
         continua.classList.add("none");
+        apareceDadosNivel()
      }else{
          alert("Verifique todos os campos e tente novamente")
      }
@@ -234,70 +214,110 @@ function validaPergunta(){
 
 function voltarPraHome(voltarHome){
     const voltar = voltarHome.parentElement;
+    const home = document.querySelector(".seusQuizzes")
+    const continuacaoHome = document.querySelector(".quizzes")
+    home.classList.remove("none");
+    continuacaoHome.classList.remove("none")
     voltar.classList.add("none");
-
-}
-function validaNivel(){
-    const validaTitulo = document.querySelector(".tituloNivel").value
-    const validaAcerto = document.querySelector(".acertoNivel").value
-    const validaUrl = document.querySelector(".urlNivel").value
-    const validaDescricao = document.querySelector(".descricaoNivel")
-    let verificacao = true;
-    if(validaTitulo.length < 10 ) {
-        alert("O título é inválido, deve conter pelo menos 10 caracteres.");
-        verificacao = false
-    }
-    if(validaAcerto < 0 || validaAcerto > 100){
-        alert("O valor deve estar entre 0 e 100")
-        verificacao = false;
-    }
     
-    try {
-        new URL(validaUrl);
-   } catch (_) {
-       verificacao = false;
-   }
+}
 
-    if(validaDescricao.length < 30){
-        alert("A descrição deve ter ao menos 30 caracteres")
-        verificacao = false;
+function validaNivel(){
+    const validaTitulo = document.querySelectorAll(".tituloNivel")
+    const validaAcerto = document.querySelectorAll(".acertoNivel")
+    const validaUrl = document.querySelectorAll(".urlNivel")
+    const validaDescricao = document.querySelectorAll(".descricaoNivel")
+    let verificacao = true;
+
+    console.log(validaTitulo);
+    console.log(validaAcerto);
+    console.log(validaUrl);
+    console.log(validaDescricao);
+
+    for(let i = 0; i < validaTitulo.length; i++){
+        if(validaTitulo[i].length < 10 ) {
+            alert("O título é inválido, deve conter pelo menos 10 caracteres.");
+            verificacao = false
+        }
+    }
+
+    for(let k = 0; k < validaAcerto.length; k++){
+        if(validaAcerto[k].value < 0 || validaAcerto[k].value > 100  ) {
+            alert("O valor deve estar entre 0 e 100")
+            verificacao = false;
+        }
+    }
+
+    for(let m = 0; m < validaUrl.length; m++){
+        try {
+            new URL(validaUrl[m].value);
+        } catch (_) {
+           verificacao = false;
+        }
+    }
+
+    for(let n = 0; n < validaDescricao.length; n++){
+        if(validaDescricao[n].length < 30){
+            alert("A descrição deve ter ao menos 30 caracteres")
+            verificacao = false;
+        } 
+    }
+
+
+    if(verificacao === true){
+        const avancar = document.querySelector(".niveis")
+        const sucessoDoQuizz = document.querySelector(".telaDeSucessoCriacaoQuizz")
+        avancar.classList.add("none");
+        sucessoDoQuizz.classList.remove("none");
+        const respostaCorreta = document.querySelector(".inputRespostaCorreta").value
+        const imgRespostaCorreta = document.querySelector(".urlRepostaCorreta").value
+        let quizz;
+        quizz = {
+            title: tituloQuizz,
+            image: imgQuizz,
+        }
+    }else{
+        alert("verifique os dados e tente novamente")
     }
 }
 
-function apareceDadosNivel(botao){
-    contadorNivel++;
-    const paiDoElemento = botao.parentElement;
-    const avoDoElemento = paiDoElemento.parentElement;
-    paiDoElemento.classList.add("none");
-    if(contadorNivel < quantidadeDeNiveis){
-    avoDoElemento.innerHTML += `
+
+function apareceDadosNivel(){
+    const avoDoElemento = document.querySelector(".niveis"); 
+    for (let i = 1; i <= quantidadeDeNiveis ; i++){         
+    avoDoElemento.innerHTML +=`       
     <div class="perguntaAberta flexColumn">
-        <span class="estiloDaFonte">Nível ${contadorNivel}</span>
+        <span class="estiloDaFonte">Nível ${i}</span>
         <input class="tituloNivel" type="text" placeholder="Título do nível">
         <input class="acertoNivel" type="text" placeholder="% de acerto mínima">
         <input class="urlNivel" type="url" placeholder="URL da imagem do nível">
         <input class="descricaoNivel" type="text" placeholder="Descrição do nível">
-    </div>
-    <div class="flex containerPergunta">
-        <span class="estiloDaFonte">Nivel ${contadorNivel+1}</span> 
-        <ion-icon name="create-outline" onclick="apareceDadosNivel(this)"></ion-icon>
-    </div>
-        
-        
-        `
-    }
-    else if(contadorNivel === parseInt(quantidadeDeNiveis)){
-        avoDoElemento.innerHTML += `    
-        <div class="perguntaAberta flexColumn">
-            <span class="estiloDaFonte">Nível ${contadorNivel}</span>
-            <input class="tituloNivel" type="text" placeholder="Título do nível">
-            <input class="acertoNivel" type="text" placeholder="% de acerto mínima">
-            <input class="urlNivel" type="url" placeholder="URL da imagem do nível">
-            <input class="descricaoNivel" type="text" placeholder="Descrição do nível">
-        </div>
-        <button class="prosseguir" onclick="validaNivel()">Finalizar Quizz</button>
-        `
+    </div>`
+        if(i === 1){
+            let sempreZero = document.querySelector(".tituloNivel").value
+            sempreZero = 0;
+        } 
+      }     
+      avoDoElemento.innerHTML +=
+      `<button class="prosseguir" onclick="validaNivel()">Finalizar Quizz</button>`     
+
 }
+
+function preencherArrayDeObjetos(){
+    let questions;
+    const todosOsTextosDaPergunta = document.querySelectorAll(".textoDaPergunta")
+    const todasAsCoresDasPerguntas = document.querySelectorAll(".corDeFundoDaPergunta")
+    const todasAsRespostasCorretas = document.querySelectorAll(".inputRespostaCorreta")
+    const todasAsImagensCorretas = document.querySelectorAll(".urlRespostaCorreta")
+    const todasAsRespostasIncorretas = document.querySelectorAll(".respostaIncorreta")
+    const todasAsImagensIncorretas = document.querySelectorAll(".url")
+
+    for(let i = 0; i < quantidadeDePerguntas; i++){
+        questions = {
+            title: todosOsTextosDaPergunta[i].value,
+            color: todasAsCoresDasPerguntas[i].value,
+        }
+    }
 }
 
 //Comportamento de respostas:
@@ -325,4 +345,3 @@ function opaco(){
     }
     
 }
-
