@@ -106,6 +106,8 @@ header{
     height: 374px;
     overflow-y: scroll;
     overflow-x: hidden;
+
+    
 }
 
 img{
@@ -115,13 +117,14 @@ img{
     border-radius: 5px;
 
     cursor: pointer;
-    
 }
 
 .imagemComTexto{
     position: relative;
     height: 181px;
     margin-bottom: 12px;
+
+    background-image: linear-gradient(to bottom, transparent, lightgrey, rgb(167, 167, 167), rgb(22, 22, 22) 75%);
 }
 
 .textoDaImg{
