@@ -3,8 +3,11 @@ let quantidadeDeNiveis = 0;
 let contadorNivel = 1;
 let tituloQuizz;
 let imgQuizz;
+let perguntas = [];
+let quizz;
+let niveis = []
 
-//quizzesLocais()
+quizzesLocais()
 pegarTodosOsQuizzes(); 
 function pegarTodosOsQuizzes(){
     const promessa = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes")
@@ -38,14 +41,30 @@ function telaDesaparece(){
 }
 
 function quizzesLocais(){
+    let listaSerializada;
+    let quizzFeitoUsuario
+    let quizzCriado
+    for(let i = 0; i < localStorage.length; i++){
+        listaSerializada = localStorage.getItem(localStorage.key(i));
+        quizzFeitoUsuario = JSON.parse(listaSerializada);
+        quizzCriado = document.querySelector(".quizzesLocais")
+        quizzCriado.innerHTML += `
+        <div class="imagemComTexto">
+            <img src="${quizzFeitoUsuario.image}" alt="">
+            <span class="textoDaImg">${quizzFeitoUsuario.title}</span>
+        </div>
+        `  
+    }
     const quizzExiste = document.querySelector(".seusQuizzes .quizzesLocais .imagemComTexto");
     if(quizzExiste !== null){
         const quizzDesaparece = document.querySelector(".quizz")
         const seusQuizzesAparece = document.querySelector(".seusQuizzes");
         quizzDesaparece.classList.add("none")
         seusQuizzesAparece.classList.remove("none");
+
     }
 }
+
 
 function validaQuizz(){
     const validaTitulo = document.querySelector(".tituloQuizz").value
@@ -136,7 +155,7 @@ function validaPergunta(){
     for(i = 0; i < validacaoDaPergunta[0].children.length; i++){
         if(validacaoDaPergunta[0].children[i].classList.contains("corDeFundoDaPergunta") === true){
             validaCor = validacaoDaPergunta[0].children[i].value;
-            if(validaCor[0] === '#' && validaCor.length <= 6){
+            if(validaCor[0] === '#' && validaCor.length === 7){
                 for(let j = 1; j < validaCor.length; j++ ){
                     if((validaCor[i] >= 'A' && validaCor[i] <= 'F') || (validaCor[i] >= 0 && validaCor[i] <= 9)){
                     }else{
@@ -147,7 +166,7 @@ function validaPergunta(){
                 }
             }else{
                 validar = false;
-                alert("Cores hexadecimais devem iniciar com # e ter até 6 caracteres")
+                alert("Cores hexadecimais devem iniciar com # e ter 6 caracteres depois do símbolo")
             }
         }else if(typeof(validacaoDaPergunta[0].children[i].value) === 'string'){
              tamanhoPergunta = validacaoDaPergunta[0].children[i].value
@@ -183,7 +202,6 @@ function validaPergunta(){
      
      function validaRespostaIncorreta(){
         const validarRespostaIncorreta = document.querySelectorAll(".respostasIncorretas");
-        console.log(validarRespostaIncorreta)
         for(let i = 0; i < validarRespostaIncorreta[0].children.length; i++){
             if(validarRespostaIncorreta[0].children[i].classList.contains("respostaIncorreta")){
                 if(validarRespostaIncorreta[0].children[i].value === null || validarRespostaIncorreta[0].children[i].value === "" ){
@@ -221,7 +239,11 @@ function voltarPraHome(voltarHome){
     home.classList.remove("none");
     continuacaoHome.classList.remove("none")
     voltar.classList.add("none");
-    
+    const dadosSerializados = JSON.stringify(quizz);
+    localStorage.setItem(idDoQuizz, dadosSerializados);
+    quizzesLocais();
+    pegarTodosOsQuizzes(); 
+    //location.reload()
 }
 
 function validaNivel(){
@@ -230,11 +252,6 @@ function validaNivel(){
     const validaUrl = document.querySelectorAll(".urlNivel")
     const validaDescricao = document.querySelectorAll(".descricaoNivel")
     let verificacao = true;
-
-    console.log(validaTitulo);
-    console.log(validaAcerto);
-    console.log(validaUrl);
-    console.log(validaDescricao);
 
     for(let i = 0; i < validaTitulo.length; i++){
         if(validaTitulo[i].length < 10 ) {
@@ -265,22 +282,39 @@ function validaNivel(){
         } 
     }
 
-
+    
     if(verificacao === true){
+        preencherArrayDeObjetos();
+        imagemDoSucessoDeCriacaoQuizz();
         const avancar = document.querySelector(".niveis")
         const sucessoDoQuizz = document.querySelector(".telaDeSucessoCriacaoQuizz")
         avancar.classList.add("none");
         sucessoDoQuizz.classList.remove("none");
-        const respostaCorreta = document.querySelector(".inputRespostaCorreta").value
-        const imgRespostaCorreta = document.querySelector(".urlRepostaCorreta").value
-        let quizz;
-        quizz = {
-            title: tituloQuizz,
-            image: imgQuizz,
-        }
+        const promessa = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes",{title: tituloQuizz,
+        image: imgQuizz,
+        questions: perguntas,
+        levels: niveis})
+        promessa.then(tratarSucesso);
+
     }else{
         alert("verifique os dados e tente novamente")
     }
+}
+
+let idDoQuizz;
+
+function tratarSucesso(sucesso){
+    idDoQuizz = sucesso.data.id
+    quizz = sucesso.data
+}
+
+function imagemDoSucessoDeCriacaoQuizz(){
+    const imagem = document.querySelector(".imgSucessoCriacao");
+    imagem.innerHTML = `
+        <img class="imagemSucessoCriacao" src="${imgQuizz}" alt="">
+        <span class="textoSucesso">${tituloQuizz}</span>
+    `
+
 }
 
 
@@ -305,21 +339,46 @@ function apareceDadosNivel(){
 
 }
 
-function preencherArrayDeObjetos(){
-    let questions;
-    const todosOsTextosDaPergunta = document.querySelectorAll(".textoDaPergunta")
-    const todasAsCoresDasPerguntas = document.querySelectorAll(".corDeFundoDaPergunta")
-    const todasAsRespostasCorretas = document.querySelectorAll(".inputRespostaCorreta")
-    const todasAsImagensCorretas = document.querySelectorAll(".urlRespostaCorreta")
-    const todasAsRespostasIncorretas = document.querySelectorAll(".respostaIncorreta")
-    const todasAsImagensIncorretas = document.querySelectorAll(".url")
 
-    for(let i = 0; i < quantidadeDePerguntas; i++){
-        questions = {
-            title: todosOsTextosDaPergunta[i].value,
-            color: todasAsCoresDasPerguntas[i].value,
+
+function preencherArrayDeObjetos(){
+    const todosOsTextosDaPergunta = document.querySelectorAll(".pergunta");
+    const todasAsRespostasCorretas = document.querySelectorAll(".respostaCorreta");
+    const todasAsRespostasIncorretas = document.querySelectorAll(".respostasIncorretas")
+    const todosOsNiveis = document.querySelectorAll(".perguntaAberta")
+
+    for(let i = 0; i < todosOsTextosDaPergunta.length; i++){
+        perguntas[i] = {title: todosOsTextosDaPergunta[i].children[1].value,
+            color: todosOsTextosDaPergunta[i].children[2].value,
+            answers: [{text: todasAsRespostasCorretas[i].children[1].value,
+                image: todasAsRespostasCorretas[i].children[2].value,
+                isCorrectAnswer: true
+            },{
+                text:todasAsRespostasIncorretas[i].children[1].value,
+                image: todasAsRespostasIncorretas[i].children[2].value,
+                isCorrectAnswer: false
+            },
+            {
+                text:todasAsRespostasIncorretas[i].children[3].value,
+                image: todasAsRespostasIncorretas[i].children[4].value,
+                isCorrectAnswer: false
+            },
+            {
+                text:todasAsRespostasIncorretas[i].children[5].value,
+                image: todasAsRespostasIncorretas[i].children[6].value,
+                isCorrectAnswer: false
+            }]
         }
     }
+
+    for(let k = 0; k < todosOsNiveis.length; k++){
+        niveis[k] = {title: todosOsNiveis[k].children[1].value,
+            image: todosOsNiveis[k].children[3].value,
+            text: todosOsNiveis[k].children[4].value,
+            minValue: parseInt(todosOsNiveis[k].children[2].value)
+        }
+    }
+
 }
 
 //Comportamento de respostas:
@@ -334,7 +393,6 @@ function selecionado(botao){
     botao.classList.remove("opaco")
     let procura = document.querySelector(".selecaoCerta")
     botao.classList.add("selecaoCerta")
-    console.log(procura)
     if(procura !== null){
         procura.classList.remove("selecaoCerta")
     }
