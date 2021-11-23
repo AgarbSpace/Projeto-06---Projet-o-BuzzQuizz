@@ -106,8 +106,6 @@ header{
     height: 374px;
     overflow-y: scroll;
     overflow-x: hidden;
-
-    
 }
 
 img{
@@ -123,8 +121,6 @@ img{
     position: relative;
     height: 181px;
     margin-bottom: 12px;
-
-    background-image: linear-gradient(to bottom, transparent, lightgrey, rgb(167, 167, 167), rgb(22, 22, 22) 75%);
 }
 
 .textoDaImg{
@@ -487,19 +483,19 @@ input::placeholder{
     width: 100%;
     height: 227px;
 
-    position:relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-bottom: 42px;
   
-    background-image: url('https://s1.static.brasilescola.uol.com.br/be/conteudo/images/imagem-em-lente-convexa.jpg');
-    background-image: url('https://s1.static.brasilescola.uol.com.br/be/conteudo/images/imagem-em-lente-convexa.jpg'), linear-gradient(rgba(0,0,0,0.57));
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.57), rgba(0, 0, 0, 0.57)), url('https://s1.static.brasilescola.uol.com.br/be/conteudo/images/imagem-em-lente-convexa.jpg');
+ 
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-color: #000000 57%;
 }
 .imagemTitulo span{
-    position: absolute;
-    top:43%;
-    left:40%;
+   
 
     font-family: Roboto;
     font-size: 39px;
@@ -682,13 +678,23 @@ input::placeholder{
 }
 .quizzesFeitos{
     width: 100%;
+    column-gap: 0px;
+    align-items: center;
+    justify-content: center;
 }
+.boxPerguntas{
+    height: auto;
 
+    margin-bottom: 24px;
+    padding: 16px 16px 0px 16px;
+}
 .imagemEDescricao img{
-    width: 163px;
+    width: 159px;
     height: 113px;
 }
 .imagemEDescricao span{
+    margin: 5px 0px 12px 0px;
+
     font-family: Roboto;
     font-size: 13px;
     font-style: normal;
@@ -719,6 +725,28 @@ input::placeholder{
     letter-spacing: 0em;
     text-align: left;
     
+}
+.perguntasQuizz .criarPergunta{
+    width: 220.32px;
+    height: 44px;
+
+    font-family: Roboto;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: center;
+}
+.perguntasQuizz .home{
+    font-family: Roboto;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 21px;
+    letter-spacing: 0em;
+text-align: center;
+
 }
 
 }

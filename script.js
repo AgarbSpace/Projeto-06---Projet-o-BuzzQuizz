@@ -15,14 +15,16 @@ function pegarTodosOsQuizzes(){
 function listarQuizzes(quizzesDoServidor){
     const quizzes = quizzesDoServidor.data;
     const addQuizzesFeitos = document.querySelector(".quizzesFeitos");
+
     for(let i = 0; i < quizzes.length; i++){
         addQuizzesFeitos.innerHTML += `
-        <div id="${quizzes[i].id}" class="imagemComTexto" onclick="quizzSelecionado(this)">
+        <div id="${quizzes[i].id}" class="imagemComTexto" onclick="quizzSelecionado(${quizzes[i].id})">
         <img src="${quizzes[i].image}"  alt="">
         <span class="textoDaImg">${quizzes[i].title}</span>
-    </div>`
-    }
+        </div>`
 }
+}
+
 
 function telaDesaparece(){
     const quizzDesaparece = document.querySelector(".quizz")
@@ -281,31 +283,17 @@ function validaNivel(){
     }
 }
 
-<<<<<<< HEAD
-function apareceDadosNivel(){
-    const avoDoElemento = document.querySelector(".niveis");
-    for (let i = 1; i <= quantidadeDeNiveis ; i++){
-        avoDoElemento.innerHTML += `
-=======
 
 function apareceDadosNivel(){
     const avoDoElemento = document.querySelector(".niveis"); 
     for (let i = 1; i <= quantidadeDeNiveis ; i++){         
     avoDoElemento.innerHTML +=`       
     <div class="perguntaAberta flexColumn">
->>>>>>> 951aa5627aade8f5ee01c3a82de29c4069e555ef
         <span class="estiloDaFonte">Nível ${i}</span>
         <input class="tituloNivel" type="text" placeholder="Título do nível">
         <input class="acertoNivel" type="text" placeholder="% de acerto mínima">
         <input class="urlNivel" type="url" placeholder="URL da imagem do nível">
         <input class="descricaoNivel" type="text" placeholder="Descrição do nível">
-<<<<<<< HEAD
-        `
-    }
-    avoDoElemento.innerHTML += `
-    <button class="prosseguir" onclick="validaNivel()">Finalizar Quizz</button>
-    `
-=======
     </div>`
         if(i === 1){
             let sempreZero = document.querySelector(".tituloNivel").value
@@ -332,7 +320,6 @@ function preencherArrayDeObjetos(){
             color: todasAsCoresDasPerguntas[i].value,
         }
     }
->>>>>>> 951aa5627aade8f5ee01c3a82de29c4069e555ef
 }
 
 //Comportamento de respostas:
@@ -360,13 +347,62 @@ function opaco(){
     }
     
 }
-<<<<<<< HEAD
 
-function quizzSelecionado(botao){
-    const quizz = document.getElementById(botao).childNodes
-    console.log(quizz)
+function quizzSelecionado(id){
+    const promessa = axios.get("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/" + id)
+    promessa.then(listarQuizzSelecionado)
+}
+function listarQuizzSelecionado(dadosQuizz){    
+   const quizz = dadosQuizz.data;
+   const titulo = quizz.title
+   const imagem = quizz.image
+   const niveis = quizz.levels
+   const perguntas = quizz.questions
+   let addQuizz = document.querySelector(".quizzEscolhido")
+   let addTitulo = document.querySelector(".imagemTitulo")
+   let addPerguntas = document.querySelector(".boxPerguntas")
+   let addResultado = document.querySelector(".boxResultado")
+
+   console.log(perguntas)
+   addQuizz.innerHTML = `
+   <div class="imagemTitulo">            
+       <span>${titulo}</span>
+   </div>
+/*      <div class="perguntasQuizz">
+           <div class="boxPerguntas">
+               <div class="tituloPergunta">${perguntas[0].title}</div>
+               <div class="boxImagem">
+                   <div class="imagemEDescricao">
+                       <img src="${perguntas[0].answers[0].image}" alt="">
+                       <span>${perguntas[0].answers[0].text}</span>
+                   </div>
+                   <div class="imagemEDescricao">
+                       <img src="${perguntas[0].answers[0].image}" alt="">
+                       <span>${perguntas[0].answers[0].text}</span>
+                   </div>
+                   <div class="imagemEDescricao">
+                       <img src="${perguntas[0].answers[0].image}" alt="">
+                       <span>${perguntas[0].answers[0].text}</span>
+                   </div>
+                   <div class="imagemEDescricao">
+                       <img src="${perguntas[0].answers[0].image}" alt="">
+                       <span>${perguntas[0].answers[0].text}</span>
+                   </div>
+               </div>
+           </div>
+           <div class="boxResultado">
+               <div class="acerto">88% de acerto: Você é praticamente um aluno de Hogwarts!</div>    
+               <div class="imagemEDescricaoFinal">
+                   <img src="https://pbs.twimg.com/profile_images/693185418997698560/6GJjHCU7_400x400.jpg" alt="">
+                   <span>Parabéns Potterhead! Bem-vindx a Hogwarts, aproveite o loop infinito de comida e clique no botão abaixo para usar o vira-tempo e reiniciar este teste.</span>
+               </div>
+           </div>
+           <button class="criarPergunta">Reiniciar Quizz</button>
+           <span class="home" onclick="voltarPraHome(this)">Voltar pra home</span>
+       </div> */
+   
+   `
+   document.querySelector(".imagemTitulo").style.backgroundImage = `url(${imagem})`;
+
 
 }
-
-=======
->>>>>>> 951aa5627aade8f5ee01c3a82de29c4069e555ef
