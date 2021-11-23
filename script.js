@@ -265,11 +265,8 @@ function validaNivel(){
 }
 
 function apareceDadosNivel(){
-/*     const paiDoElemento = botao.parentElement; */
     const avoDoElemento = document.querySelector(".niveis");
-    console.log(avoDoElemento)
-/*     paiDoElemento.classList.add("none");
- */    for (let i = 1; i <= quantidadeDeNiveis ; i++){
+    for (let i = 1; i <= quantidadeDeNiveis ; i++){
         avoDoElemento.innerHTML += `
         <span class="estiloDaFonte">Nível ${i}</span>
         <input class="tituloNivel" type="text" placeholder="Título do nível">
